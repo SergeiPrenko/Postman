@@ -53,21 +53,90 @@
 						"exec": [
 							"var jsonData = pm.response.json();\r",
 							"let reqData = request.data;\r",
-							"let reqAge = reqData.age\r",
-							"console.log(+reqAge)\r",
-							"\r",
+							"let reqAge = reqData.age;\r",
+							"let reqName = reqData.name;\r",
+							"let reqSalary = +reqData.salary;\r",
+							"console.log(reqData)\r",
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"pm.test(\"Check age\", function () {\r",
-							"    pm.expect(jsonData.age).to.eql(\"35\");\r",
+							"    pm.expect(jsonData.age).to.eql(\"36\");\r",
 							"});\r",
 							"pm.test(\"Check name\", function () {\r",
 							"    pm.expect(jsonData.name).to.eql(\"Sergei\");\r",
 							"});\r",
 							"pm.test(\"Check salary\", function () {\r",
 							"    pm.expect(jsonData.salary).to.eql(700);\r",
+							"});\r",
+							"pm.test(\"Check name req = name res\", function () {\r",
+							"    pm.expect(jsonData.name).to.eql(reqName);\r",
+							"});\r",
+							"pm.test(\"Check age req = Age res\", function () {\r",
+							"    pm.expect(jsonData.age).to.eql(reqAge);\r",
+							"});\r",
+							"pm.test(\"Check salary req = salary res\", function () {\r",
+							"    pm.expect(jsonData.salary).to.eql(reqSalary);\r",
+							"});\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"console.log(jsonData.family)\r",
+							"pm.test(\"Check salary 1-4\", function () {\r",
+							"    pm.expect(jsonData.family.u_salary_1_5_year).to.eql(reqSalary*4);\r",
 							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Sergei",
+							"type": "text"
+						},
+						{
+							"key": "age",
+							"value": "36",
+							"type": "text"
+						},
+						{
+							"key": "salary",
+							"value": "700",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://162.55.220.72:5007/user_info_3",
+					"protocol": "http",
+					"host": [
+						"162",
+						"55",
+						"220",
+						"72"
+					],
+					"port": "5007",
+					"path": [
+						"user_info_3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EP_2 Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"console.log(jsonData)"
 						],
 						"type": "text/javascript"
 					}
