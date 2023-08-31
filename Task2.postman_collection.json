@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "EP_1",
+			"name": "Tests_1",
 			"event": [
 				{
 					"listen": "test",
@@ -45,7 +45,7 @@
 			"response": []
 		},
 		{
-			"name": "EP_2",
+			"name": "Tests_2",
 			"event": [
 				{
 					"listen": "test",
@@ -57,6 +57,7 @@
 							"let reqName = reqData.name;\r",
 							"let reqSalary = +reqData.salary;\r",
 							"console.log(reqData)\r",
+							"console.log(jsonData)\r",
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
@@ -78,8 +79,7 @@
 							"pm.test(\"Check salary req = salary res\", function () {\r",
 							"    pm.expect(jsonData.salary).to.eql(reqSalary);\r",
 							"});\r",
-							"var jsonData = JSON.parse(responseBody);\r",
-							"console.log(jsonData.family)\r",
+							"\r",
 							"pm.test(\"Check salary 1-4\", function () {\r",
 							"    pm.expect(jsonData.family.u_salary_1_5_year).to.eql(reqSalary*4);\r",
 							"});"
@@ -129,44 +129,50 @@
 			"response": []
 		},
 		{
-			"name": "EP_2 Copy",
+			"name": "Tests_3",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"var jsonData = JSON.parse(responseBody);\r",
-							"console.log(jsonData)"
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"var jsonData = pm.response.json();\r",
+							"var reqData = pm.request.url.query.toObject();\r",
+							"console.log(reqData.name)\r",
+							"pm.test(\"Check name\", function () {\r",
+							"    pm.expect(jsonData.name).to.eql(reqData.name);\r",
+							"});\r",
+							"pm.test(\"Check age\", function () {\r",
+							"    pm.expect(jsonData.age).to.eql(reqData.age);\r",
+							"});\r",
+							"pm.test(\"Check Salary\", function () {\r",
+							"    pm.expect(jsonData.salary).to.eql(+reqData.salary);\r",
+							"});\r",
+							"console.log(jsonData.family)\r",
+							"pm.test(\"Check DogName\", function () {\r",
+							"    pm.expect(jsonData.family.pets.dog).have.property(\"name\");\r",
+							"});\r",
+							"pm.test(\"Check DogAge\", function () {\r",
+							"    pm.expect(jsonData.family.pets.dog).have.property(\"age\");\r",
+							"});\r",
+							"pm.test(\"Check DogLucky\", function () {\r",
+							"    pm.expect(jsonData.family.pets.dog.name).to.eql(\"Luky\");\r",
+							"});\r",
+							"pm.test(\"Check DogAge4\", function () {\r",
+							"    pm.expect(jsonData.family.pets.dog.age).to.eql(4);\r",
+							"});"
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "name",
-							"value": "Sergei",
-							"type": "text"
-						},
-						{
-							"key": "age",
-							"value": "35",
-							"type": "text"
-						},
-						{
-							"key": "salary",
-							"value": "700",
-							"type": "text"
-						}
-					]
-				},
 				"url": {
-					"raw": "http://162.55.220.72:5007/user_info_3",
+					"raw": "http://162.55.220.72:5007/object_info_3?name=Sergei&age=35&salary=700",
 					"protocol": "http",
 					"host": [
 						"162",
@@ -176,7 +182,21 @@
 					],
 					"port": "5007",
 					"path": [
-						"user_info_3"
+						"object_info_3"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Sergei"
+						},
+						{
+							"key": "age",
+							"value": "35"
+						},
+						{
+							"key": "salary",
+							"value": "700"
+						}
 					]
 				}
 			},
