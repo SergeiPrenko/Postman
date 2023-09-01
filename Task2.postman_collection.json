@@ -238,7 +238,11 @@
 							"\r",
 							"pm.globals.set(\"name\", jsonData.name);\r",
 							"pm.globals.set(\"age\", jsonData.age);\r",
-							"pm.globals.set(\"salary\", jsonData.salary[0]);"
+							"pm.globals.set(\"salary\", jsonData.salary[0]);\r",
+							"\r",
+							"for (let i = 0; i < jsonData.salary[i]; i++){\r",
+							"console.log(jsonData.salary[i])\r",
+							"}"
 						],
 						"type": "text/javascript"
 					}
