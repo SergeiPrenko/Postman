@@ -226,9 +226,19 @@
 							"console.log(jsonData.salary[0])\r",
 							"console.log(jsonData.salary[1])\r",
 							"console.log(jsonData.salary[2])\r",
-							"pm.test(\"Check Salary\", function () {\r",
+							"pm.test(\"Check Salary [0]\", function () {\r",
 							"    pm.expect(jsonData.salary[0]).to.eql(+reqData.salary)\r",
-							"});"
+							"});\r",
+							"pm.test(\"Check Salary[1]\", function () {\r",
+							"        pm.expect(+jsonData.salary[1]).to.eql(reqData.salary*2)\r",
+							"});\r",
+							"pm.test(\"Check Salary[2]\", function () {\r",
+							"        pm.expect(+jsonData.salary[2]).to.eql(reqData.salary*3)\r",
+							"});\r",
+							"\r",
+							"pm.globals.set(\"name\", jsonData.name);\r",
+							"pm.globals.set(\"age\", jsonData.age);\r",
+							"pm.globals.set(\"salary\", jsonData.salary[0]);"
 						],
 						"type": "text/javascript"
 					}
@@ -267,6 +277,37 @@
 				}
 			},
 			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "name",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "variable_key",
+			"value": ""
 		}
 	]
 }
