@@ -236,9 +236,9 @@
 							"        pm.expect(+jsonData.salary[2]).to.eql(reqData.salary*3)\r",
 							"});\r",
 							"\r",
-							"pm.globals.set(\"name\", jsonData.name);\r",
-							"pm.globals.set(\"age\", jsonData.age);\r",
-							"pm.globals.set(\"salary\", jsonData.salary[0]);\r",
+							"pm.collectionVariables.set(\"name\", jsonData.name);\r",
+							"pm.collectionVariables.set(\"age\", jsonData.age);\r",
+							"pm.collectionVariables.set(\"salary\", jsonData.salary[0]);\r",
 							"\r",
 							"for (let i = 0; i < jsonData.salary[i]; i++){\r",
 							"console.log(jsonData.salary[i])\r",
@@ -281,6 +281,114 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Tests_5",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"var jsonData = pm.response.json()\r",
+							"var reqData = request.data\r",
+							"console.log(jsonData)\r",
+							"pm.test(\"Check salary start\", function () {\r",
+							"    pm.expect(jsonData).have.property(\"start_qa_salary\");\r",
+							"});\r",
+							"pm.test(\"Check salary after 6 months\", function () {\r",
+							"    pm.expect(jsonData).have.property(\"qa_salary_after_6_months\");\r",
+							"});\r",
+							"pm.test(\"Check salary after 12 months\", function () {\r",
+							"    pm.expect(jsonData).have.property(\"qa_salary_after_12_months\");\r",
+							"});\r",
+							"pm.test(\"Check salary after 1.5_year\", function () {\r",
+							"    pm.expect(jsonData).have.property(\"qa_salary_after_1.5_year\");\r",
+							"});\r",
+							"pm.test(\"Check salary after 3.5_years\", function () {\r",
+							"    pm.expect(jsonData).have.property(\"qa_salary_after_3.5_years\");\r",
+							"});\r",
+							"pm.test(\"Check person\", function () {\r",
+							"    pm.expect(jsonData).have.property(\"person\");\r",
+							"});\r",
+							"pm.test(\"Check salary eql\", function () {\r",
+							"        pm.expect(jsonData.start_qa_salary).to.eql(+reqData.salary)\r",
+							"});\r",
+							"pm.test(\"Check salary 6 months eql\", function () {\r",
+							"        pm.expect(jsonData.qa_salary_after_6_months).to.eql(+reqData.salary*2)\r",
+							"});\r",
+							"pm.test(\"Check salary 12 months eql\", function () {\r",
+							"        pm.expect(jsonData.qa_salary_after_12_months).to.eql(+reqData.salary*2.7)\r",
+							"});\r",
+							"pm.test(\"Check salary 1.5 year eql\", function () {\r",
+							"        pm.expect(jsonData[\"qa_salary_after_1.5_year\"]).to.eql(+reqData.salary*3.3)\r",
+							"});\r",
+							"pm.test(\"Check salary person\", function () {\r",
+							"        pm.expect(jsonData.person.u_name[1]).to.eql(+reqData.salary)\r",
+							"});\r",
+							"pm.test(\"Check u_age person\", function () {\r",
+							"        pm.expect(jsonData.person.u_age).to.eql(+reqData.age)\r",
+							"});\r",
+							"pm.test(\"Check salary 5 years person\", function () {\r",
+							"        pm.expect(jsonData.person.u_salary_5_years).to.eql(+reqData.salary*4.2)\r",
+							"});\r",
+							"var b = jsonData.person;\r",
+							"for (let i = 0; i < Object.keys(b).length; i++) {\r",
+							"    console.log(Object.values(b)[i]);\r",
+							"    var poi = Object.values(b)[i]\r",
+							"    if (typeof poi == 'object' ) {\r",
+							"        for (let j = 0; j < Object.keys(b).length; j++) {\r",
+							"    //         Object.values(b)[j]\r",
+							"            console.log(Object.values(b.u_name)[j]);\r",
+							"        }\r",
+							"    }\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "{{name}}",
+							"type": "text"
+						},
+						{
+							"key": "age",
+							"value": "{{age}}",
+							"type": "text"
+						},
+						{
+							"key": "salary",
+							"value": "{{salary}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://162.55.220.72:5008/user_info_2",
+					"protocol": "http",
+					"host": [
+						"162",
+						"55",
+						"220",
+						"72"
+					],
+					"port": "5008",
+					"path": [
+						"user_info_2"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
@@ -306,11 +414,14 @@
 	"variable": [
 		{
 			"key": "name",
-			"value": "",
-			"type": "string"
+			"value": ""
 		},
 		{
-			"key": "variable_key",
+			"key": "age",
+			"value": ""
+		},
+		{
+			"key": "salary",
 			"value": ""
 		}
 	]
